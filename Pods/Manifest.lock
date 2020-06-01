@@ -1,0 +1,20 @@
+PODS:
+  - JGProgressHUD (2.1)
+  - secux-paymentdevicekit (1.0.5)
+
+DEPENDENCIES:
+  - JGProgressHUD
+  - secux-paymentdevicekit
+
+SPEC REPOS:
+  trunk:
+    - JGProgressHUD
+    - secux-paymentdevicekit
+
+SPEC CHECKSUMS:
+  JGProgressHUD: aa403e9a5b45cae98903c4600cccdd98c0c3ec90
+  secux-paymentdevicekit: ada66f908310eff10750b716961174062b565666
+
+PODFILE CHECKSUM: f43472d461cce08a0580ab9a012f8a18c9918ded
+
+COCOAPODS: 1.9.1
