@@ -1,6 +1,6 @@
 PODS:
   - JGProgressHUD (2.1)
-  - secux-paymentdevicekit (1.0.5)
+  - secux-paymentdevicekit (1.0.6)
 
 DEPENDENCIES:
   - JGProgressHUD
@@ -13,7 +13,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   JGProgressHUD: aa403e9a5b45cae98903c4600cccdd98c0c3ec90
-  secux-paymentdevicekit: ada66f908310eff10750b716961174062b565666
+  secux-paymentdevicekit: f89b4febab767c5a20eb259ea93614adfd33166e
 
 PODFILE CHECKSUM: f43472d461cce08a0580ab9a012f8a18c9918ded
 

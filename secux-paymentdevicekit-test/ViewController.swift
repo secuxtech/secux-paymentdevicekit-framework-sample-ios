@@ -158,7 +158,7 @@ class ViewController: BaseViewController {
                 let alert = UIAlertController(title: "Please confirm the payment", message: "", preferredStyle: UIAlertController.Style.alert)
                 
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction!) -> Void in
-                    //self.peripheralManager.requestDisconnect()
+                    self.peripheralManager.requestDisconnect()
                 })
                 
                 let okAction = UIAlertAction(
