@@ -67,7 +67,7 @@ Get the payment ivKey from the payment device.
     .OprationSuccess, the returned String contains device's ivKey, 
     otherwise String might contain an error message.  
 
-    Note: Call the function in thread. You are allowed to cancel the payment after get ivKey. 
+    Note: Call the function in thread. You are allowed to cancel the payment after getting the ivKey. 
 ```
 
 #### <u>Sample</u>
