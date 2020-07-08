@@ -95,6 +95,8 @@ Call the function after getting payment ivKey, will cancel the payment.
 
 4. <b>Generate encrypted payment data</b>
 
+Source code of the SecuXUtility.swift can be found in secux-paymentdevicekit-test
+
 #### <u>Declaration</u>
 ```swift
     static func getEncryptMobilePaymentCommand(terminalId:String, 
