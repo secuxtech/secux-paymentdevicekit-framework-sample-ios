@@ -49,7 +49,11 @@ pod 'secux-paymentdevicekit'
 
 2. <b>Get device payment ivKey</b>
 
-Get the payment ivKey from the payment device.
+Get the payment ivKey from the payment device when payment device is in payment mode.
+
+<span style="color:red">Note: Call the function in thread. You are allowed to cancel the payment after getting the ivKey.</span>
+
+* <b>2.1 Get device payment ivKey from device ID</b>
 
 #### <u>Declaration</u>
 ```swift
@@ -60,14 +64,40 @@ Get the payment ivKey from the payment device.
 ```
     devID: Device ID, e.g. "811c00000016"
 ```
+* <b>2.2 Get device payment ivKey from device ID and payment nonce</b>
+
+This is recommended to get the ivKey when using P22. Payment nonce can garantee the payment correctness.
+
+#### <u>Declaration</u>
+```java
+    func doGetIVKey(devID:String, nonce:[UInt8]) -> (SecuXPaymentPeripheralManagerError, 
+                                                    String)
+```
+
+#### <u>Parameters</u>
+```
+    devID: Device ID, e.g. "811c00000016"
+    nonce: Payment nonce from payment QR code, convert the nonce hex string to byte array
+
+    Payment QR code sample:
+    {"amount":"5", "coinType":"DCT:SPC", "nonce":"e956013c", 
+    "deviceIDhash":"b0442888f1c9ddb5bb924382f44b0f025e0dc7cd"}
+```
 
 #### <u>Return value</u>
 ```
     SecuXPaymentPeripheralManagerError shows the operation result, if the result is  
     .OprationSuccess, the returned String contains device's ivKey, 
     otherwise String might contain an error message.  
+```
 
-    Note: Call the function in thread. You are allowed to cancel the payment after getting the ivKey. 
+#### <u>Error message</u>
+```
+    - Scan device failed!
+    - No device coding key info.
+    - Invalid payment QRCode! QRCode is timeout!
+    - Device is not activated!
+    - Set device timeout failed!
 ```
 
 #### <u>Sample</u>
@@ -168,5 +198,5 @@ maochuns, maochunsun@secuxtech.com
 
 ## License
 
-secux_paymentdevicekit is available under the MIT license. See the LICENSE file for more info.
+secux_paymentdevicekit is available under the MIT license. 
 
