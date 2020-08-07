@@ -132,7 +132,8 @@ Source code of the SecuXUtility.swift can be found in secux-paymentdevicekit-tes
     static func getEncryptMobilePaymentCommand(terminalId:String, 
                                                    amount:String, 
                                                     ivKey:String, 
-                                                 cryptKey:String)->Data?
+                                                 cryptKey:String,
+                                                 currency:String)->Data?
 ```
 
 #### <u>Parameters</u>
@@ -141,6 +142,8 @@ Source code of the SecuXUtility.swift can be found in secux-paymentdevicekit-tes
     cryptKey:    A key string used in device activation
     ivKey:       Device payment ivKey from doGetIVKey function
     amount:      Payment amount
+    currency:    Payment currency. For FW v1.0, currency is "SPC"; 
+                 For FW v2.0, currency is "DCT:SPC"
 ```
 
 #### <u>Return value</u>
@@ -151,13 +154,17 @@ Source code of the SecuXUtility.swift can be found in secux-paymentdevicekit-tes
 #### <u>Sample</u>
 ```swift
     let payData = SecuXUtility.getEncryptMobilePaymentCommand(terminalId: "gkn3p0ec", 
-                                                                  amount: "200", 
-                                                                  ivKey: ivkey, cryptKey: pKey)
+                                                amount: "200", 
+                                                ivKey: ivkey, 
+                                                cryptKey: "asz2gorm5bxh5nc5ecjjsqqstgnlsxsj")
 ```
 
 5. <b>Do payment</b>
 
 Send the encrypted payment data to the device to confirm the payment.
+
+<span style="color:red">Note: call the function in thread.</span>
+
 #### <u>Declaration</u>
 ```swift
     func doPaymentVerification(encPaymentData:Data) ->  
@@ -173,14 +180,15 @@ Send the encrypted payment data to the device to confirm the payment.
 ```
     SecuXPaymentPeripheralManagerError shows the operation result, if the result is not 
     .OprationSuccess, the returned String might contain an error message.  
-
-    Note: call the function in thread.
 ```
 
 #### <u>Sample</u>
 ```swift
     DispatchQueue.global().async {
-        let payData = SecuXUtility.getEncryptMobilePaymentCommand(terminalId: self.terminalID, amount: "2", ivKey: ivkey, cryptKey: self.paymentKey)
+        let payData = SecuXUtility.getEncryptMobilePaymentCommand(terminalId: "gkn3p0ec",      
+                                            amount: "2", 
+                                            ivKey: ivkey, 
+                                            cryptKey: "asz2gorm5bxh5nc5ecjjsqqstgnlsxsj")
         let (payret, error) = self.peripheralManager.doPaymentVerification(encPaymentData: payData!)
         
         if payret == .OprationSuccess{
