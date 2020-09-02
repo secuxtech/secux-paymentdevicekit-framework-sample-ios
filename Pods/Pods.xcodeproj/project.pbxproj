@@ -525,14 +525,31 @@
 			};
 			name = Debug;
 		};
-		38E213936FF753E360045F2C743C9381 /* Release */ = {
+		4EA32792656F49A9599DB6BCB3F5F252 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C60D12C2C3310BD77C01ECC0AB267A1 /* secux-paymentdevicekit.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		534896D437F4A0D4BC2333E4DC7F06D6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1486D1256EA68ED01EB0B03F58090CE2 /* secux-paymentdevicekit.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -542,23 +559,6 @@
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
-		};
-		821A74CE7C8989758B2E4D191DB6E3D7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C60D12C2C3310BD77C01ECC0AB267A1 /* secux-paymentdevicekit.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
 		};
 		AC0A1C72275325BAD1EED3BB7D48F762 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -774,8 +774,8 @@
 		05C37C08355AF93C59D7E12B131E5027 /* Build configuration list for PBXAggregateTarget "secux-paymentdevicekit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				821A74CE7C8989758B2E4D191DB6E3D7 /* Debug */,
-				38E213936FF753E360045F2C743C9381 /* Release */,
+				4EA32792656F49A9599DB6BCB3F5F252 /* Debug */,
+				534896D437F4A0D4BC2333E4DC7F06D6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
