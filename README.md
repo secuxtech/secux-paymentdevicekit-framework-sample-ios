@@ -47,13 +47,13 @@ pod 'secux-paymentdevicekit'
 ```
 
 
-2. <b>Get device payment ivKey</b>
+2. <b>Get device opeation ivKey</b>
 
-Get the payment ivKey from the payment device when payment device is in payment mode.
+Get the opeation ivKey from the payment device when payment device is in payment / promotion / refund / refill mode.
 
 <span style="color:red">Note: Call the function in thread. You are allowed to cancel the payment after getting the ivKey.</span>
 
-* <b>2.1 Get device payment ivKey from device ID</b>
+* <b>2.1 Get device opeation ivKey from device ID</b>
 
 #### <u>Declaration</u>
 ```swift
@@ -64,9 +64,9 @@ Get the payment ivKey from the payment device when payment device is in payment 
 ```
     devID: Device ID, e.g. "811c00000016"
 ```
-* <b>2.2 Get device payment ivKey from device ID and payment nonce</b>
+* <b>2.2 Get device opeation ivKey from device ID and opeation nonce</b>
 
-This is recommended to get the ivKey when using P22. Payment nonce can garantee the payment correctness.
+This is recommended to get the ivKey when using P22. Operation nonce can garantee the payment correctness.
 
 #### <u>Declaration</u>
 ```java
@@ -114,16 +114,16 @@ This is recommended to get the ivKey when using P22. Payment nonce can garantee 
     }
 ```
 
-3. <b>Cancel Payment</b>
+3. <b>Cancel operation</b>
 
-Call the function after getting payment ivKey, will cancel the payment.
+Call the function after getting opeation ivKey, will cancel the opeation.
 
 #### <u>Declaration</u>
 ```swift
     func requestDisconnect()
 ```
 
-4. <b>Generate encrypted payment data</b>
+4. <b>Generate encrypted operation data</b>
 
 Source code of the SecuXUtility.swift can be found in secux-paymentdevicekit-test
 
@@ -159,9 +159,9 @@ Source code of the SecuXUtility.swift can be found in secux-paymentdevicekit-tes
                                                 cryptKey: "asz2gorm5bxh5nc5ecjjsqqstgnlsxsj")
 ```
 
-5. <b>Do payment</b>
+5. <b>Confirm operation</b>
 
-Send the encrypted payment data to the device to confirm the payment.
+Send the encrypted operation data to the device to confirm the opearation.
 
 <span style="color:red">Note: call the function in thread.</span>
 

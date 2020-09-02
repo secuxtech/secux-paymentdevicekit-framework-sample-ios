@@ -168,7 +168,7 @@ class ViewController: BaseViewController {
                     (action: UIAlertAction!) -> Void in
                       
                         DispatchQueue.global().async {
-                            let payData = SecuXUtility.getEncryptMobilePaymentCommand(terminalId: self.terminalID, amount: "2", ivKey: ivkey, cryptKey: self.paymentKey)
+                            let payData = SecuXUtility.getEncryptMobilePaymentCommand(terminalId: self.terminalID, amount: "2", ivKey: ivkey, cryptKey: self.paymentKey, currency: "SPC")
                             let (payret, error) = self.peripheralManager.doPaymentVerification(encPaymentData: payData!)
                             
                             if payret == .OprationSuccess{
