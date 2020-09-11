@@ -150,50 +150,83 @@ class ViewController: BaseViewController {
             return
         }
         
-        let (ret, ivkey) = self.peripheralManager.doGetIVKey(devID: paymentPeripheral.uniqueID)
-        print("\(ret) \(ivkey)")
-        if ret == .OprationSuccess{
+        if !paymentPeripheral.isOldVersion{
             
-            DispatchQueue.main.async {
-                let alert = UIAlertController(title: "Please confirm the payment", message: "", preferredStyle: UIAlertController.Style.alert)
+            let (ret, ivkey) = self.peripheralManager.doGetIVKey(devID: paymentPeripheral.uniqueID)
+            print("\(ret) \(ivkey)")
+            if ret == .OprationSuccess{
                 
-                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction!) -> Void in
-                    self.peripheralManager.requestDisconnect()
-                })
-                
-                let okAction = UIAlertAction(
-                    title: "OK",
-                    style: .default,
-                    handler: {
-                    (action: UIAlertAction!) -> Void in
-                      
-                        DispatchQueue.global().async {
-                            let payData = SecuXUtility.getEncryptMobilePaymentCommand(terminalId: self.terminalID, amount: "2", ivKey: ivkey, cryptKey: self.paymentKey, currency: "SPC")
-                            let (payret, error) = self.peripheralManager.doPaymentVerification(encPaymentData: payData!)
-                            
-                            if payret == .OprationSuccess{
-                                self.showMessageInMainThread(title: "Payment successful!", message: "")
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Please confirm the payment", message: "", preferredStyle: UIAlertController.Style.alert)
+                    
+                    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction!) -> Void in
+                        self.peripheralManager.requestDisconnect()
+                    })
+                    
+                    let okAction = UIAlertAction(
+                        title: "OK",
+                        style: .default,
+                        handler: {
+                        (action: UIAlertAction!) -> Void in
+                          
+                            DispatchQueue.global().async {
+                                let payData = SecuXUtility.getEncryptMobilePaymentCommand(terminalId: self.terminalID, amount: "2", ivKey: ivkey, cryptKey: self.paymentKey, currency: "SPC")
+                                let (payret, error) = self.peripheralManager.doPaymentVerification(encPaymentData: payData!)
                                 
-                            }else{
-                                self.showMessageInMainThread(title: "Payment failed!", message: "Error: \(error)")
+                                if payret == .OprationSuccess{
+                                    self.showMessageInMainThread(title: "Payment successful!", message: "")
+                                    
+                                }else{
+                                    self.showMessageInMainThread(title: "Payment failed!", message: "Error: \(error)")
+                                }
                             }
-                        }
-                        
-                })
+                            
+                    })
+                    
+                    
+                    alert.addAction(cancelAction)
+                    alert.addAction(okAction)
+                    self.present(alert, animated: true, completion: nil)
+                }
                 
                 
-                alert.addAction(cancelAction)
-                alert.addAction(okAction)
-                self.present(alert, animated: true, completion: nil)
+                
+            }else{
+            
+                self.showMessageInMainThread(title: "Payment failed!", message: "Get ivkey failed! Error: \(ivkey)")
             }
             
-            
-            
         }else{
-        
-            self.showMessageInMainThread(title: "Payment failed!", message: "Get ivkey failed! Error: \(ivkey)")
+            let machineIOParam = "{\"uart\":\"0\",\"gpio1\":\"0\",\"gpio2\":\"0\",\"gpio31\":\"0\",\"gpio32\":\"0\",\"gpio4\":\"0\",\"gpio4c\":\"0\",\"gpio4cInterval\":\"0\",\"gpio4cCount\":\"0\",\"gpio4dOn\":\"0\",\"gpio4dOff\":\"0\",\"gpio4dInterval\":\"0\",\"runStatus\":\"0\",\"lockStatus\":\"0\"}"
+
+            if let theData = machineIOParam.data(using: .utf8),
+                let paramDict = try? JSONSerialization.jsonObject(with: theData, options: []) as? [String: Any]{
+                
+                let (ret, ivkey) = self.peripheralManager.doGetIVKey(devID: paymentPeripheral.uniqueID)
+                print("\(ret) \(ivkey)")
+                if ret == .OprationSuccess{
+             
+                    let payData = SecuXUtility.getEncryptMobilePaymentCommand(terminalId: "00006baf", amount: "2", ivKey: ivkey, cryptKey: "PA123456789012345678901234567891", currency:"SPC")
+                    
+                    let (payret, error) = self.peripheralManager.doPaymentVerification(encPaymentData: payData!, machineControlParams: paramDict)
+                    
+                    
+                    if payret == .OprationSuccess{
+                        self.showMessageInMainThread(title: "Payment successful!", message: "")
+    
+                    }else{
+                        self.showMessageInMainThread(title: "Payment failed!", message: "Error: \(error)")
+                    }
+                    
+                }else{
+                    self.showMessageInMainThread(title: "Payment failed!", message: "Get ivkey failed! Error: \(ivkey)")
+                }
+                
+                SecuXBLEManager.shared.disconnectDevice()
+            }
         }
-            
+        
+        
 
     }
     
