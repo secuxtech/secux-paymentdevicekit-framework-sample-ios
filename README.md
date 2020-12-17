@@ -13,10 +13,18 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Installation
 
+### CocoaPods:
+
 secux-paymentdevicekit is available through [CocoaPods](https://cocoapods.org). To install it, simply add the following line to your Podfile:
 
 ```ruby
 pod 'secux-paymentdevicekit'
+```
+
+### Carthage:
+
+```
+binary "https://maochuns.github.io/secux_paymentdevicekit.json" ~> 2.0.12
 ```
 
 ### Add bluetooth privacy permissions in the plist
