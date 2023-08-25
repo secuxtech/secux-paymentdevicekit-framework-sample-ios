@@ -21,12 +21,6 @@ secux-paymentdevicekit is available through [CocoaPods](https://cocoapods.org). 
 pod 'secux-paymentdevicekit'
 ```
 
-### Carthage:
-
-```
-binary "https://maochuns.github.io/secux_paymentdevicekit.json" ~> 2.0.12
-```
-
 ### Add bluetooth privacy permissions in the plist
 
 ![Screenshot](Readme_PlistImg.png)
@@ -210,7 +204,7 @@ Send the encrypted operation data to the device to confirm the opearation.
 
 ## Author
 
-maochuns, maochunsun@secuxtech.com
+judywang, judywang@secuxtech.com
 
 ## License
 
