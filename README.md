@@ -158,7 +158,7 @@ Source code of the SecuXUtility.swift can be found in secux-paymentdevicekit-tes
     let payData = SecuXUtility.getEncryptMobilePaymentCommand(terminalId: "gkn3p0ec", 
                                                 amount: "200", 
                                                 ivKey: ivkey, 
-                                                cryptKey: "asz2gorm5bxh5nc5ecjjsqqstgnlsxsj")
+                                                cryptKey: callerProvidedPaymentKey)
 ```
 
 5. <b>Confirm operation</b>
@@ -190,7 +190,7 @@ Send the encrypted operation data to the device to confirm the opearation.
         let payData = SecuXUtility.getEncryptMobilePaymentCommand(terminalId: "gkn3p0ec",      
                                             amount: "2", 
                                             ivKey: ivkey, 
-                                            cryptKey: "asz2gorm5bxh5nc5ecjjsqqstgnlsxsj")
+                                            cryptKey: callerProvidedPaymentKey)
         let (payret, error) = self.peripheralManager.doPaymentVerification(encPaymentData: payData!)
         
         if payret == .OprationSuccess{

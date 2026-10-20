@@ -109,12 +109,28 @@ class ViewController: BaseViewController {
     }()
     
     var peripheralManager = SecuXPaymentPeripheralManager(scanTimeout: 5, connTimeout: 30, checkRSSI: -80)
-    let terminalID = "gkn3p0ec"
-    let paymentKey = "asz2gorm5bxh5nc5ecjjsqqstgnlsxsj"
+    private var terminalID = ""
+    private var paymentKey = ""
     
     var theSelectedCell : DeviceTableViewCell?
     var deviceList = [SecuXBLEDev]()
     
+    /// Supply a fresh key for the intended test device from a trusted runtime source.
+    func configurePaymentDemo(terminalID: String, paymentKey: String) -> Bool {
+        guard terminalID.utf8.count == 8, paymentKey.utf8.count == 32 else { return false }
+        self.terminalID = terminalID
+        self.paymentKey = paymentKey
+        return true
+    }
+
+    private func requirePaymentDemoCredentials() -> Bool {
+        guard terminalID.utf8.count == 8, paymentKey.utf8.count == 32 else {
+            showMessageInMainThread(title: "Test credentials required", message: "Configure the intended test device before payment or activation.")
+            return false
+        }
+        return true
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -145,6 +161,7 @@ class ViewController: BaseViewController {
     
     
     func doPayment(dev: SecuXBLEDev){
+        guard requirePaymentDemoCredentials() else { return }
         guard let paymentPeripheral = dev.paymentPeripheral else{
             logw("Invalid device")
             return
@@ -153,7 +170,6 @@ class ViewController: BaseViewController {
         if !paymentPeripheral.isOldVersion{
             
             let (ret, ivkey) = self.peripheralManager.doGetIVKey(devID: paymentPeripheral.uniqueID)
-            print("\(ret) \(ivkey)")
             if ret == .OprationSuccess{
                 
                 DispatchQueue.main.async {
@@ -203,10 +219,9 @@ class ViewController: BaseViewController {
                 let paramDict = try? JSONSerialization.jsonObject(with: theData, options: []) as? [String: Any]{
                 
                 let (ret, ivkey) = self.peripheralManager.doGetIVKey(devID: paymentPeripheral.uniqueID)
-                print("\(ret) \(ivkey)")
                 if ret == .OprationSuccess{
              
-                    let payData = SecuXUtility.getEncryptMobilePaymentCommand(terminalId: "00006baf", amount: "2", ivKey: ivkey, cryptKey: "PA123456789012345678901234567891", currency:"SPC")
+                    let payData = SecuXUtility.getEncryptMobilePaymentCommand(terminalId: self.terminalID, amount: "2", ivKey: ivkey, cryptKey: self.paymentKey, currency:"SPC")
                     
                     let (payret, error) = self.peripheralManager.doPaymentVerification(encPaymentData: payData!, machineControlParams: paramDict)
                     
